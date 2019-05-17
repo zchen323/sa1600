@@ -165,7 +165,7 @@ function createRow(row, i){
   cell1.innerHTML="Kit " + i;
   cell2.innerHTML="<input name='name' type='text' />";
   cell3.innerHTML="<select class='w3-select' name='chromosome' >" + option + "</select>";
-  cell4.innerHTML="<input name='position' type='text' />";
+  cell4.innerHTML="<input name='position' type='Number' onkeydown='return event.keyCode !== 69' />";
   cell5.innerHTML="<input name='mutation' type='text' />";
 }
 
@@ -188,7 +188,9 @@ function validatePosition(inputData){
   var err = [];
   for(i = 0; i < inputData.length; i++){
     var row = inputData[i];
-    var pos = row.position.replace(/[, ]+/g, "").trim();
+    var pos = row.position;
+
+    var pos = pos.replace(/[, ]+/g, "").trim();
     var chm = row.chromosome;
     var chmLenth = parseInt(chromosomeLength[chm].replace(/[, ]+/g, "").trim());
     console.log(chmLenth);
@@ -212,6 +214,7 @@ function clearAll() {
 }
 
 function submitRequest(event){
+  clearErrorMessages();
   // get data first
   var form = document.querySelector("form");
   var inputData = [];
