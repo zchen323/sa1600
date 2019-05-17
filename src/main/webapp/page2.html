@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+body, html {
+  height: 100%;
+  line-height: 1.8;
+}
+
+/* Full height image header */
+.bgimg-1 {
+  background-position: center;
+  background-size: cover;
+  background-image: url("Nuprobe_rgb2_whitetype.png");
+  min-height: 100%;
+}
+
+.w3-bar .w3-button {
+  padding: 16px;
+}
+</style>
+<body>
+  <div class="w3-container w3-black" >
+    <img src="Nuprobe_rgb2_whitetype.png" />
+  </div>
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card" id="myNavbar" style="height:56px">
+    <a href="#home" class="w3-bar-item w3-button w3-wide"><img src="Nuprobe_rgb2_whitetype.png" /></a>
+    <!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small">
+      <a href="page2.html" class="w3-bar-item w3-button">NGSure Kit</a>
+      <a href="page4.html" class="w3-bar-item w3-button">NGSure Services</a>
+      <a href="#AccountInfo" class="w3-bar-item w3-button">Account Info</a>
+      <a href="page1.html" class="w3-bar-item w3-button">Logout&nbsp;</a>
+    </div>
+    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
+  <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">NGSure Kit</a>
+  <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">NGServices</a>
+  <a href="#work" onclick="w3_close()" class="w3-bar-item w3-button">Account Info</a>
+  <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button">Logout</a>
+
+</nav>
+<div class="w3-padding-32 w3-container">
+<h2>NGSure Kit</h2>
+<div>
+  Enter the number of Kits you wish to order <input type="text" id="numOfKits" /> <button onclick="myFunction()">Enter</button>
+</div>
+<br />
+<div id="errorMessages" class="w3-panel w3-hide w3-text-red">
+  Please check your inputs:
+
+</div>
+
+<div id=dataFields class="w3-hide">
+<form>
+  <table id="myTable" class="w3-table ">
+    <tr>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp; </th>
+      <th>Name</th>
+      <th>Chromosome</th>
+      <th>Position</th>
+      <th>
+        <div class="w3-tooltip">
+          <div>Mutation(?)</div>
+          <div class="w3-text w3-container w3-yellow" style="width: 300px">
+            <p style="font-weight:100">mutation's explanation goes here</p>
+          </div>
+      </div>
+      </th>
+    </tr>
+  </table>
+</form>
+  <br />
+  <div class="w3-center">
+    <button onclick="addRow()">Add a Row</button>
+    <button onclick="clearAll()">Cancel</button>
+    <button onclick="submitRequest(event)">Submit</button>
+  </div>
+</div>
+
+<br /><br />
+<script>
+var chromosomeLength = {
+  '1':	'248,956,422',
+  '2':	'242,193,529',
+  '3':	'198,295,559',
+  '4':	'190,214,555',
+  '5':	'181,538,259',
+  '6':	'170,805,979',
+  '7':	'159,345,973',
+  '8':	'145,138,636',
+  '9':	'138,394,717',
+  '10':	'133,797,422',
+  '11':	'135,086,622',
+  '12':	'133,275,309',
+  '13':	'114,364,328',
+  '14':	'107,043,718',
+  '15':	'101,991,189',
+  '16':	'90,338,345',
+  '17':	'83,257,441',
+  '18':	'80,373,285',
+  '19':	'58,617,616',
+  '20':	'64,444,167',
+  '21':	'46,709,983',
+  '22':	'50,818,468',
+  'X':	'156,040,895',
+  'Y':	'57,227,415',
+  'M':	'16,569'
+};
+var chromosomes = Object.keys(chromosomeLength);
+function addRow(){
+  var table = document.getElementById("myTable");
+  var rowLength = table.rows.length;
+
+  var row = table.insertRow(rowLength);
+  createRow(row, rowLength)
+
+}
+var option = "<option value='' disabled selected>Choose your Chromosome</option>";
+for(i = 0; i <chromosomes.length; i++){
+  option = option + "<option value='" + chromosomes[i] + "'>" + chromosomes[i] + "</option>";
+}
+
+function myFunction(){
+  clearAll();
+  var numOfKits = document.getElementById("numOfKits").value;
+  var table = document.getElementById("myTable");
+  if(numOfKits == 0){
+    numOfKits = 1;
+  }
+  //alert(numOfKits);
+  for(i = numOfKits; i > 0; i--) {
+    var row = table.insertRow(1);
+    createRow(row, i);
+
+  }
+  document.getElementById("dataFields").classList.remove("w3-hide");
+}
+
+function createRow(row, i){
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+  var cell5 = row.insertCell(4);
+  cell1.innerHTML="Kit " + i;
+  cell2.innerHTML="<input name='name' type='text' />";
+  cell3.innerHTML="<select class='w3-select' name='chromosome' >" + option + "</select>";
+  cell4.innerHTML="<input name='position' type='text' />";
+  cell5.innerHTML="<input name='mutation' type='text' />";
+}
+
+function validateName(inputData){
+  var err = [];
+  var names=[];
+  for(i = 0; i < inputData.length; i++){
+    var row = inputData[i];
+    var name = row.name;
+    if(names.includes(name)){
+      err.push("duplicate name: " + name);
+    }else{
+      names.push(name);
+    }
+  }
+  return err;
+}
+
+function validatePosition(inputData){
+  var err = [];
+  for(i = 0; i < inputData.length; i++){
+    var row = inputData[i];
+    var pos = row.position.replace(/[, ]+/g, "").trim();
+    var chm = row.chromosome;
+    var chmLenth = parseInt(chromosomeLength[chm].replace(/[, ]+/g, "").trim());
+    console.log(chmLenth);
+    if(pos > chmLenth){
+      err.push("the position of chromosome " + chm + " can't greate than " + chromosomeLength[chm]);
+    }else if(pos < 1){
+      err.push("the position of chromosome " + chm + " can't be 0 or negative");
+    }
+  }
+  return err;
+}
+
+function clearAll() {
+  var table = document.getElementById("myTable");
+  var rowLength = table.rows.length;
+  for(i = 1; i < rowLength; i++){
+    table.deleteRow(1);
+  }
+  document.getElementById("dataFields").classList.add("w3-hide");
+  clearErrorMessages();
+}
+
+function submitRequest(event){
+  // get data first
+  var form = document.querySelector("form");
+  var inputData = [];
+  console.log(form.length);
+  for(i = 0; i < form.length; i=i+4){
+    var row = {};
+    row[form.elements[i].name] = form.elements[i].value;
+    row[form.elements[i+1].name] = form.elements[i+1].value;
+    row[form.elements[i+2].name] = form.elements[i+2].value;
+    row[form.elements[i+3].name] = form.elements[i+3].value;
+    inputData.push(row);
+  }
+  console.log(inputData);
+  var errorMessages = validateInputs(inputData);
+  console.log(errorMessages);
+  if(errorMessages.length){
+    createErrorMessages(errorMessages);
+  }
+}
+
+function validateInputs(inputData){
+  var errorMessages = [];
+  var error = makeSureNoEmptyInputs(inputData);
+  if(error.length){
+    errorMessages.push(error);
+  }else{
+    error = validateName(inputData);
+    if(error.length){
+      errorMessages.push(error);
+    }
+    error = validatePosition(inputData);
+    if(error.length){
+      errorMessages.push(error);
+    }
+  }
+  return errorMessages;
+}
+
+function makeSureNoEmptyInputs(inputData){
+  var errorMessages=[];
+  for(i = 0; i < inputData.length; i++){
+    var obj = inputData[i];
+    var keys = Object.keys(obj);
+    keys.forEach(function(entry){
+      if(!obj[entry]){
+        errorMessages.push(entry + " is empty");
+      }
+    })
+  }
+  // remove duplicate error errorMessage
+  var newErrorMessages = [];
+  errorMessages.forEach(function(entry){
+    if(!newErrorMessages.includes(entry)){
+      newErrorMessages.push(entry);
+    }
+  });
+
+  return newErrorMessages;
+}
+function createErrorMessages(errors){
+  // clearErrorMessages first
+  clearErrorMessages();
+
+  var ul = document.createElement("ul");
+  ul.setAttribute("id", "errorList");
+  for(i = 0; i < errors.length; i++){
+    var error = errors[i];
+    for(j = 0; j < error.length; j++){
+      var li = document.createElement("li");
+      var text = document.createTextNode(error[j]);
+      li.appendChild(text);
+      ul.appendChild(li);
+    }
+  }
+  console.log(ul);
+  var errElem = document.getElementById("errorMessages");
+  errElem.classList.remove("w3-hide");
+  errElem.appendChild(ul);
+}
+
+function clearErrorMessages(){
+  var errElem = document.getElementById("errorMessages");
+  errElem.classList.add("w3-hide");
+  var ul = document.getElementById("errorList");
+  if(ul){
+    ul.parentNode.removeChild(ul);
+  }
+}
+
+</script>
+
+</body>
+</html>

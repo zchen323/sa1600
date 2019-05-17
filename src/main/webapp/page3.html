@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+body, html {
+  height: 100%;
+  line-height: 1.8;
+}
+
+/* Full height image header */
+.bgimg-1 {
+  background-position: center;
+  background-size: cover;
+  background-image: url("Nuprobe_rgb2_whitetype.png");
+  min-height: 100%;
+}
+
+.w3-bar .w3-button {
+  padding: 16px;
+}
+</style>
+<body>
+  <div class="w3-container w3-black" >
+    <img src="Nuprobe_rgb2_whitetype.png" />
+  </div>
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card" id="myNavbar" style="height:56px">
+    <a href="#home" class="w3-bar-item w3-button w3-wide"><img src="Nuprobe_rgb2_whitetype.png" /></a>
+    <!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small">
+      <a href="page2.html" class="w3-bar-item w3-button">NGSure Kit</a>
+      <a href="page4.html" class="w3-bar-item w3-button">NGSure Services</a>
+      <a href="#AccountInfo" class="w3-bar-item w3-button">Account Info</a>
+      <a href="page1.html" class="w3-bar-item w3-button">Logout&nbsp;</a>
+    </div>
+    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
+  <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">NGSure Kit</a>
+  <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">NGServices</a>
+  <a href="#work" onclick="w3_close()" class="w3-bar-item w3-button">Account Info</a>
+  <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button">Logout</a>
+
+</nav>
+<div class="w3-padding-32 w3-container">
+<h2>NGSure Kit</h2>
+<div class="w3-panel">
+  <h3>MyKit1 &nbsp;&nbsp;&nbsp;Chr. 4:&nbsp;&nbsp;&nbsp; 5,263,719&nbsp;&nbsp;&nbsp;C>T</h3>
+  <p>
+    Difficulty: Low&nbsp;&nbsp;&nbsp;&nbsp;95% confidence of success<br />
+    Price: $150 <br />
+    ETA: 2 days <br />
+  </p>
+  <br />
+  <h3>MyKit2 &nbsp;&nbsp;&nbsp;Chr. 7:&nbsp;&nbsp;&nbsp; 12,745,880&nbsp;&nbsp;&nbsp;C>TA</h3>
+  <p>
+    Difficulty: Dedium&nbsp;&nbsp;&nbsp;&nbsp;80% confidence of success<br />
+    Price: $250 <br />
+    ETA: 5 days <br />
+  </p>
+  <br />
+  <h3>MyKit3 &nbsp;&nbsp;&nbsp;Chr. 4:&nbsp;&nbsp;&nbsp; 5,263,719&nbsp;&nbsp;&nbsp;CAAAT>C</h3>
+  <p>
+    Difficulty: High&nbsp;&nbsp;&nbsp;&nbsp;<br />
+    Price: --- <br />
+    ETA: --- <br />
+    Sorry, based on our bioinformatic analysis, we do not believe that we can currently desiqa a robust
+    NGSure Kit for this variant. Please contact <a href="#">Technical Support</a> if this
+    variant is critical to your work.
+  </p>
+
+
+</div>
+
+
+
+<br /><br />
+<script>
+
+</script>
+
+</body>
+</html>
