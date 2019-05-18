@@ -61,6 +61,7 @@ body, html {
 </nav>
 <div class="w3-padding-32 w3-container">
 <h2>NGSure Kit</h2>
+<div id="collectInput">
 <div>
   Enter the number of Kits you wish to order <input type="text" id="numOfKits" /> <button onclick="myFunction()">Enter</button>
 </div>
@@ -97,8 +98,41 @@ body, html {
   </div>
 </div>
 
+</div>
+<div id="confirm" class="w3-hide">
+  <div id="inputToBeConfirmed"></div>
+  <div class="w3-center">
+    <button onclick="confirmCancel()">Cancel</button>
+    <button onclick="confirmed()">Confirm</button>
+  </div>
+</div>
 <br /><br />
 <script>
+var testdata =[
+  {
+    'toolKit':{
+      'name': 'MyKit1',
+      'chromosome': '4',
+      'position': '555,555,555',
+      'mutation': 'C>T'
+    },
+    'difficulty':'low 95% confidence of success',
+    'price': '$150',
+    'ETA': '2 days'
+  },
+  {
+    'toolKit':{
+      'name': 'MyKit1',
+      'chromosome': '4',
+      'position': '555,555,555',
+      'mutation': 'C>T'
+    },
+    'difficulty':'low 95% confidence of success',
+    'price': '$150',
+    'ETA': '2 days'
+  }
+]
+
 var chromosomeLength = {
   '1':	'248,956,422',
   '2':	'242,193,529',
@@ -176,7 +210,7 @@ function validateName(inputData){
     var row = inputData[i];
     var name = row.name;
     if(names.includes(name)){
-      err.push("duplicate name: " + name);
+      err.push("duplicate name: " + name );
     }else{
       names.push(name);
     }
@@ -232,6 +266,36 @@ function submitRequest(event){
   console.log(errorMessages);
   if(errorMessages.length){
     createErrorMessages(errorMessages);
+  }else{
+    // submit requst to backend
+    // show confirm information
+    var content = document.getElementById("inputToBeConfirmed");
+    for(i = 0; i < testdata.length; i++){
+      var data = testdata[i];
+      var toolKit = data.toolKit;
+      var confirmElem = document.createElement("div");
+      confirmElem.classList.add('w3-panel');
+      confirmElem.classList.add('w3-bottombar');
+      confirmElem.classList.add('w3-border-light-grey');
+      var p = document.createElement("p");
+      var string = "<b>" + toolKit.name + " " + toolKit.chromosome + " " + toolKit.position + " " + toolKit.mutation + "</b><br />";
+      string += "Difficulty: " + data.difficulty +"<br />" + "Price: " + data.price + "<br />" + "ETA: " + data.ETA;
+      p.innerHTML = string;
+      confirmElem.appendChild(p);
+      content.appendChild(confirmElem);
+    }
+    document.getElementById("confirm").classList.remove("w3-hide");
+    document.getElementById("collectInput").classList.add("w3-hide");
+  }
+
+}
+function confirmCancel(){
+  document.getElementById("confirm").classList.add("w3-hide");
+  document.getElementById("collectInput").classList.remove("w3-hide");
+  var toBeConfirmed = document.getElementById("inputToBeConfirmed");
+  var nodes = toBeConfirmed.childNodes;
+  while(toBeConfirmed.childNodes.length){
+    toBeConfirmed.removeChild(toBeConfirmed.childNodes[0]);
   }
 }
 

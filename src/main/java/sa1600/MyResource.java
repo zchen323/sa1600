@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
@@ -17,6 +18,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+
+import sa1600.data.InfoConfirm;
+import sa1600.data.Kit;
 
 @Path("test")
 public class MyResource {
@@ -51,9 +55,24 @@ public class MyResource {
 		}
 		Student student = new Student();
 		student.setName(entity.getProperty("name").toString());
-		return Response.ok().entity(student).build();
-				
+		return Response.ok().entity(student).build();			
 	}
+	
+	@POST
+	@Path("kit")
+	public Response toBeconfirm(List<Kit> kits){
+		List<InfoConfirm> info = new ArrayList<InfoConfirm>();
+		for(int i = 0; i < kits.size(); i++){
+			InfoConfirm confirm = new InfoConfirm();
+			confirm.setKit(kits.get(i));
+			confirm.setDifficulty("Low, " + i);
+			confirm.setPrice("" + (i*4));
+			confirm.setEta("" + i);
+			info.add(confirm);
+		}		
+		return Response.ok().entity(info).build();
+	}
+	
 	
 	@GET
 	@Path("savetest")
