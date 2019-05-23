@@ -5,6 +5,7 @@ public class Kit {
 	private String chromosome;
 	private String position;
 	private String mutation;
+	private String sequence;
 	
 	public String getName() {
 		return name;
@@ -30,4 +31,14 @@ public class Kit {
 	public void setMutation(String mutation) {
 		this.mutation = mutation;
 	}
+	public String getSequence() {
+		if(this.sequence != null){
+			this.sequence = this.sequence.trim();
+		}
+		return sequence;
+	}
+	public void setSequence(String sequence) {
+		this.sequence = sequence;
+	}
+	
 }

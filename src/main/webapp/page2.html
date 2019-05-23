@@ -26,6 +26,41 @@ body, html {
 .w3-bar .w3-button {
   padding: 16px;
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 </style>
 <body>
   <div class="w3-container w3-black" >
@@ -80,12 +115,9 @@ body, html {
       <th>Chromosome</th>
       <th>Position</th>
       <th>
-        <div class="w3-tooltip">
-          <div>Mutation(?)</div>
-          <div class="w3-text w3-container w3-yellow" style="width: 300px">
-            <p style="font-weight:100">mutation's explanation goes here</p>
-          </div>
-      </div>
+        <div class="tooltip">Mutation
+          <span class="tooltiptext" style="font-weight: 100;">mutation's explanation goes here</span>
+        </div>
       </th>
     </tr>
   </table>
@@ -94,7 +126,7 @@ body, html {
   <div class="w3-center">
     <button onclick="addRow()">Add a Row</button>
     <button onclick="clearAll()">Cancel</button>
-    <button onclick="submitRequest(event)">Submit</button>
+    <button id="submitRequest" onclick="submitRequest(event)">Submit</button>
   </div>
 </div>
 
@@ -268,27 +300,36 @@ function submitRequest(event){
     createErrorMessages(errorMessages);
   }else{
     // submit requst to backend
-    // show confirm information
-    var content = document.getElementById("inputToBeConfirmed");
-    for(i = 0; i < testdata.length; i++){
-      var data = testdata[i];
-      var toolKit = data.toolKit;
-      var confirmElem = document.createElement("div");
-      confirmElem.classList.add('w3-panel');
-      confirmElem.classList.add('w3-bottombar');
-      confirmElem.classList.add('w3-border-light-grey');
-      var p = document.createElement("p");
-      var string = "<b>" + toolKit.name + " " + toolKit.chromosome + " " + toolKit.position + " " + toolKit.mutation + "</b><br />";
-      string += "Difficulty: " + data.difficulty +"<br />" + "Price: " + data.price + "<br />" + "ETA: " + data.ETA;
-      p.innerHTML = string;
-      confirmElem.appendChild(p);
-      content.appendChild(confirmElem);
-    }
-    document.getElementById("confirm").classList.remove("w3-hide");
-    document.getElementById("collectInput").classList.add("w3-hide");
+    mypostRequest(inputData, showConfirmInformation);
+    //showConfirmInformation(testdata);
   }
 
 }
+function showConfirmInformation(mydata){
+  var content = document.getElementById("inputToBeConfirmed");
+  console.log("======")
+  console.log(mydata);
+
+  for(i = 0; i < mydata.length; i++){
+    var data = mydata[i];
+    var toolKit = data.kit;
+    console.log(toolKit);
+    var confirmElem = document.createElement("div");
+    confirmElem.classList.add('w3-panel');
+    confirmElem.classList.add('w3-bottombar');
+    confirmElem.classList.add('w3-border-light-grey');
+    var p = document.createElement("p");
+    var string = "<b>Name:</b> " + toolKit.name + " <b>Chr.:</b> " + toolKit.chromosome + " <b>Position:</b> " + toolKit.position + " <b>Mutation:</b> " + toolKit.mutation + "</b><br />";
+    string += "<pre>" + toolKit.sequence + "</pre><br />";
+    string += "Difficulty: " + data.difficulty +"<br />" + "Price: " + data.price + "<br />" + "ETA: " + data.eta;
+    p.innerHTML = string;
+    confirmElem.appendChild(p);
+    content.appendChild(confirmElem);
+  }
+  document.getElementById("confirm").classList.remove("w3-hide");
+  document.getElementById("collectInput").classList.add("w3-hide");
+}
+
 function confirmCancel(){
   document.getElementById("confirm").classList.add("w3-hide");
   document.getElementById("collectInput").classList.remove("w3-hide");
@@ -366,6 +407,27 @@ function clearErrorMessages(){
   if(ul){
     ul.parentNode.removeChild(ul);
   }
+}
+
+function mypostRequest(data, func){
+  console.log(data);
+  var submitButton = document.getElementById("submitRequest");
+  submitButton.disabled = true;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function(){
+    if(this.readyState == 4 && this.status == 200){
+      console.log("success");
+      console.log(this);
+      func(JSON.parse(this.response));
+      submitButton.disabled = false;
+    }else{
+      ;//console.log("failed");
+    }
+  };
+  xhttp.open("POST", "/test/kit", true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.setRequestHeader("Accept", "application/json");
+  xhttp.send(JSON.stringify(data));
 }
 
 </script>
