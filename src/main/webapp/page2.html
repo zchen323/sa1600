@@ -420,8 +420,8 @@ function mypostRequest(data, func){
       console.log(this);
       func(JSON.parse(this.response));
       submitButton.disabled = false;
-    }else{
-      ;//console.log("failed");
+    }else if(this.readyState == 4){
+      submitButton.disabled = false;
     }
   };
   xhttp.open("POST", "/test/kit", true);

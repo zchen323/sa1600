@@ -1,0 +1,5 @@
+User
+
+id	password first-name last-name email phone address	company	isLocked
+
+	 	

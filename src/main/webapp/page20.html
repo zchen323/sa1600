@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+body, html {
+  height: 100%;
+  line-height: 1.8;
+}
+
+/* Full height image header */
+.bgimg-1 {
+  background-position: center;
+  background-size: cover;
+  background-image: url("Nuprobe_rgb2_whitetype.png");
+  min-height: 100%;
+}
+
+.w3-bar .w3-button {
+  padding: 16px;
+}
+</style>
+<body>
+  <div class="w3-container w3-black" >
+    <img src="Nuprobe_rgb2_whitetype.png" />
+  </div>
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card" id="myNavbar" style="height:56px">
+    <a href="#home" class="w3-bar-item w3-button w3-wide"><img src="Nuprobe_rgb2_whitetype.png" /></a>
+    <!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small">
+      <a href="page2.html" class="w3-bar-item w3-button">NGSure Kit</a>
+      <a href="page4.html" class="w3-bar-item w3-button">NGSure Services</a>
+      <a href="#AccountInfo" class="w3-bar-item w3-button">Account Info</a>
+      <a href="page1.html" class="w3-bar-item w3-button">Logout&nbsp;</a>
+    </div>
+    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
+  <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">NGSure Kit</a>
+  <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button">NGServices</a>
+  <a href="#work" onclick="w3_close()" class="w3-bar-item w3-button">Account Info</a>
+  <a href="#pricing" onclick="w3_close()" class="w3-bar-item w3-button">Logout</a>
+
+</nav>
+<div class="w3-padding-32 w3-container">
+<h2>NGSure Kit</h2>
+<div>
+  Enter the number of Kits you wish to order <input type="text" id="numOfKits" /> <button onclick="myFunction()">Enter</button>
+</div>
+<br />
+<div id=dataFields class="w3-hide">
+  <table id="myTable" class="w3-table ">
+    <tr>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp; </th>
+      <th>Name</th>
+      <th>Chromosome</th>
+      <th>Position</th>
+      <th>Mutation</th>
+    </tr>
+  </table>
+  <br />
+  <div class="w3-center">
+    <button onclick="clearAll()">Cancel</button>
+    <a href="page3.html"><button>Submit</button></a>
+  </div>
+</div>
+
+
+<br /><br />
+<script>
+function myFunction(){
+  clearAll();
+  var numOfKits = document.getElementById("numOfKits").value;
+  var table = document.getElementById("myTable");
+  if(numOfKits == 0){
+    numOfKits = 1;
+  }
+  alert(numOfKits);
+  for(i = numOfKits; i > 0; i--) {
+    var row = table.insertRow(1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    cell1.innerHTML="Kit " + i;
+    cell2.innerHTML="<input type='text' />";
+    cell3.innerHTML="<input type='text' />";
+    cell4.innerHTML="<input type='text' />";
+    cell5.innerHTML="<input type='text' />";
+  }
+  document.getElementById("dataFields").classList.remove("w3-hide");
+}
+
+function clearAll() {
+  var table = document.getElementById("myTable");
+  var rowLength = table.rows.length;
+  for(i = 1; i < rowLength; i++){
+    table.deleteRow(1);
+  }
+  document.getElementById("dataFields").classList.add("w3-hide");
+}
+
+</script>
+
+</body>
+</html>

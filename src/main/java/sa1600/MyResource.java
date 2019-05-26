@@ -20,8 +20,10 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
+import sa1600.dao.UserDao;
 import sa1600.data.InfoConfirm;
 import sa1600.data.Kit;
+import sa1600.util.EmailUtil;
 import sa1600.util.NCBIUtil;
 import sa1600.util.Sequence;
 
@@ -35,8 +37,24 @@ public class MyResource {
 	@GET
 	@Path("hello")
 	public Response helloWorld() {
+		EmailUtil.sendSimpleMail();
 		return Response.ok().entity("Hello World").build();
 	}
+	
+	@GET
+	@Path("createUser")
+	public Response createUser() throws Exception{
+		UserDao.createUser("itb1323", "pwd");
+		return Response.ok().entity("user created").build();
+	}
+	
+	@GET
+	@Path("validateUser")
+	public Response validateUser() throws Exception{
+		UserDao.validateUsernameAndPassowrd("itb1323", "pwd");
+		return Response.ok().entity("").build();
+	}
+	
 	
 	@GET
 	@Path("json")
@@ -105,6 +123,12 @@ public class MyResource {
 		student.setProperty("age", 50);
 		
 		Key key1 = datastore.put(student);
+		System.out.println(key1.getName());
+		System.out.println(key1.getId());
+		System.out.println(key1.getKind());
+		System.out.println(key1.getParent());
+		
+		
 		
 	
 		try {
